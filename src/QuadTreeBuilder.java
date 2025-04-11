@@ -1,11 +1,11 @@
-public class QuadTreeBuilder2 {
+public class QuadTreeBuilder {
     private int[][][] pixels;
     private int width, height;
     private double threshold;
     private int minBlockSize;
     private int method;
 
-    public QuadTreeBuilder2(ImageParser parser, int method, double threshold, int minBlockSize) {
+    public QuadTreeBuilder(ImageParser parser, int method, double threshold, int minBlockSize) {
         this.pixels = parser.getPixels();
         this.width = parser.getWidth();
         this.height = parser.getHeight();
@@ -39,17 +39,17 @@ public class QuadTreeBuilder2 {
                 throw new IllegalArgumentException("Metode error tidak dikenali: " + method);
         }
 
-        int blockArea = w * h;
+        int w1 = w / 2, w2 = w - w1;
+        int h1 = h / 2, h2 = h - h1;
 
-        boolean canSplit = (blockArea >= 4 * minBlockSize) && (w > 1 || h > 1);
-        boolean shouldSplit = error >= threshold && canSplit;
+        boolean split = (w1 * h1 >= minBlockSize) &&
+                (w2 * h1 >= minBlockSize) &&
+                (w1 * h2 >= minBlockSize) &&
+                (w2 * h2 >= minBlockSize) && error >= threshold;
 
         QuadTreeNode node = new QuadTreeNode(x, y, w, h, avg);
 
-        if (shouldSplit) {
-            int w1 = w / 2, w2 = w - w1;
-            int h1 = h / 2, h2 = h - h1;
-
+        if (split) {
             QuadTreeNode[] children = new QuadTreeNode[4];
             children[0] = buildRecursive(x, y, w1, h1); // Top-left
             children[1] = buildRecursive(x + w1, y, w2, h1); // Top-right

@@ -1,20 +1,20 @@
 public class QuadTreeNode {
     private int x, y; // Koordinat kiri-atas area
-    private int width, height; // Ukuran area
+    private int width, height;
     private int[] avgColor; // Warna rata-rata area [R, G, B]
-    private QuadTreeNode[] children; // Anak-anak: [0]=LU, [1]=RU, [2]=LD, [3]=RD
+    private QuadTreeNode[] children; // [0]=LU, [1]=RU, [2]=LD, [3]=RD
 
-    // Konstruktor untuk simpul daun (leaf) atau simpul internal (yang punya anak)
+    // Konstruktor
     public QuadTreeNode(int x, int y, int width, int height, int[] avgColor) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.avgColor = avgColor;
-        this.children = null; // Belum dibagi
+        this.children = null;
     }
 
-    // Setter anak-anak ketika dibagi
+    // Setter]
     public void setChildren(QuadTreeNode[] children) {
         this.children = children;
     }
@@ -44,7 +44,6 @@ public class QuadTreeNode {
         return children;
     }
 
-    // Cek apakah node ini adalah leaf (tidak dibagi lagi)
     public boolean isLeaf() {
         return children == null;
     }

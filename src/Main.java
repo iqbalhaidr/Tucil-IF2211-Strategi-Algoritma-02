@@ -18,7 +18,7 @@ public class Main {
             ImageParser parser = new ImageParser(inputPath);
 
             // ====== 2. Bangun quadtree ======
-            QuadTreeBuilder2 builder = new QuadTreeBuilder2(parser, method, threshold, minBlockSize);
+            QuadTreeBuilder builder = new QuadTreeBuilder(parser, method, threshold, minBlockSize);
             QuadTreeNode root = builder.build();
 
             // ====== 3. Rekonstruksi gambar ======

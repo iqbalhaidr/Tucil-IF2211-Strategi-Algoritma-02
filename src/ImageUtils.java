@@ -2,18 +2,6 @@ import java.io.IOException;
 
 public class ImageUtils {
 
-    /**
-     * Menghitung warna rata-rata (R, G, B) dari blok gambar berukuran width x
-     * height,
-     * dengan titik kiri atas di (x, y).
-     *
-     * @param pixels Matriks piksel 3D [y][x][channel]
-     * @param x      Koordinat kiri atas blok (sumbu X)
-     * @param y      Koordinat kiri atas blok (sumbu Y)
-     * @param width  Lebar blok
-     * @param height Tinggi blok
-     * @return Array [avgR, avgG, avgB]
-     */
     public static int[] calculateAverageRGB(int[][][] pixels, int x, int y, int width, int height) {
         long sumR = 0, sumG = 0, sumB = 0;
         int totalPixel = width * height;
@@ -53,7 +41,7 @@ public class ImageUtils {
         double varG = sumSqG / totalPixel;
         double varB = sumSqB / totalPixel;
 
-        return (varR + varG + varB) / 3.0; // sesuai petunjuk tugas
+        return (varR + varG + varB) / 3.0;
     }
 
     public static double calculateMAD(int[][][] pixels, int x, int y, int width, int height, int[] avgColor) {
