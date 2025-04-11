@@ -1,15 +1,17 @@
 public class QuadTreeBuilder2 {
     private int[][][] pixels;
     private int width, height;
-    private int threshold;
+    private double threshold;
     private int minBlockSize;
+    private int method;
 
-    public QuadTreeBuilder2(ImageParser parser, int threshold, int minBlockSize) {
+    public QuadTreeBuilder2(ImageParser parser, int method, double threshold, int minBlockSize) {
         this.pixels = parser.getPixels();
         this.width = parser.getWidth();
         this.height = parser.getHeight();
         this.threshold = threshold;
         this.minBlockSize = minBlockSize;
+        this.method = method;
     }
 
     public QuadTreeNode build() {
@@ -18,7 +20,25 @@ public class QuadTreeBuilder2 {
 
     private QuadTreeNode buildRecursive(int x, int y, int w, int h) {
         int[] avg = ImageUtils.calculateAverageRGB(pixels, x, y, w, h);
-        double error = ImageUtils.calculateMAD(pixels, x, y, w, h, avg); // Atur Error Method
+        double error;
+
+        switch (method) {
+            case 1:
+                error = ImageUtils.calculateVariance(pixels, x, y, w, h, avg);
+                break;
+            case 2:
+                error = ImageUtils.calculateMAD(pixels, x, y, w, h, avg);
+                break;
+            case 3:
+                error = ImageUtils.calculateMaxPixelDifference(pixels, x, y, w, h);
+                break;
+            case 4:
+                error = ImageUtils.calculateEntropy(pixels, x, y, w, h);
+                break;
+            default:
+                throw new IllegalArgumentException("Metode error tidak dikenali: " + method);
+        }
+
         int blockArea = w * h;
 
         boolean canSplit = (blockArea >= 4 * minBlockSize) && (w > 1 || h > 1);
